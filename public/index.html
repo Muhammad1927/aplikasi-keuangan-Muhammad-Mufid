@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Pengeluaran</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px #888888;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #response {
+            text-align: center;
+            margin-top: 10px;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+     <h1>Input Pengeluaran</h1>
+    <form id="pengeluaran-form">
+        <label for="namaBarang">Nama Barang:</label>
+        <input type="text" id="namaBarang" required>
+        <br>
+        <label for="hargaBarang">Harga Barang:</label>
+        <input type="number" id="hargaBarang" required>
+        <br>
+        <label for="tanggalPembelian">Tanggal Pembelian:</label>
+        <input type="date" id="tanggalPembelian" required>
+        <br>
+        <button type="submit">Simpan</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('pengeluaran-form');
+            const responseDiv = document.getElementById('response');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const namaBarang = document.getElementById('namaBarang').value;
+                const hargaBarang = parseFloat(document.getElementById('hargaBarang').value);
+                const tanggalPembelian = document.getElementById('tanggalPembelian').value;
+
+                const data = {
+                    namaBarang,
+                    hargaBarang,
+                    tanggalPembelian
+                };
+
+                try {
+                    const response = await fetch('/api/pengeluaran', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.status === 201) {
+                        responseDiv.innerHTML = 'Pengeluaran berhasil disimpan.';
+                    } else {
+                        const responseBody = await response.json();
+                        responseDiv.innerHTML = `Gagal menyimpan pengeluaran: ${responseBody.error}`;
+                    }
+                } catch (error) {
+                    responseDiv.innerHTML = 'Terjadi kesalahan. Silakan coba lagi.';
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('pengeluaran-form');
+            const responseDiv = document.getElementById('response');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const namaBarang = document.getElementById('namaBarang').value;
+                const hargaBarang = parseFloat(document.getElementById('hargaBarang').value);
+                const tanggalPembelian = document.getElementById('tanggalPembelian').value;
+
+                const data = {
+                    namaBarang,
+                    hargaBarang,
+                    tanggalPembelian
+                };
+
+                // Simpan data ke Local Storage
+                const existingData = JSON.parse(localStorage.getItem('pengeluaran')) || [];
+                existingData.push(data);
+                localStorage.setItem('pengeluaran', JSON.stringify(existingData));
+
+                responseDiv.innerHTML = 'Pengeluaran berhasil disimpan.';
+                form.reset();
+            });
+        });
+    </script>
+</body>
+</html>

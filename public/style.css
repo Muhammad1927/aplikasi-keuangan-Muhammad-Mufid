@@ -1,0 +1,40 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  color: #333;
+}
+
+form {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 400px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+input, button {
+  margin: 10px 0;
+  width: 100%;
+  padding: 10px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#pengeluaranList {
+  max-width: 400px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
